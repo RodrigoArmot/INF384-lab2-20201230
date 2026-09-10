@@ -39,8 +39,10 @@ jobs:
           args: >
             -Dsonar.organization=${{ vars.SONAR_ORG }}
             -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
+            -Dsonar.qualitygate.wait=true
 
   publicar:
+    needs: validar
     if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     name: Publicar artefacto
     runs-on: ubuntu-latest
@@ -64,6 +66,6 @@ jobs:
       - name: Publicar el paquete
         uses: actions/upload-artifact@v4
         with:
-          name: paquete
+          name: despachos-<versión>
           path: dist/
           overwrite: true
