@@ -80,3 +80,34 @@ def agrupar_por_cliente(pedidos: list[Pedido]) -> dict[str, list[Pedido]]:
 
 def pedidos_abiertos(pedidos: list[Pedido]) -> list[Pedido]:
     return [p for p in pedidos if not p.esta_cerrado()]
+
+def calcular_boleta(pedido: Pedido, cliente_frecuente: bool = False) -> dict[str, float]:
+    igv = 0.18
+    descuento = 0.10
+    subtotal = pedido.total()
+
+    if pedido.estado is Estado.ANULADO:
+        raise TransicionInvalida("no se emite boleta de un pedido anulado")
+
+    if subtotal <= 0:
+        return {"subtotal": 0.0, "descuento": 0.0, "igv": 0.0, "total": 0.0}
+
+    monto_descuento = 0.0
+    if cliente_frecuente and subtotal >= 100:
+        monto_descuento = subtotal * descuento
+    elif pedido.unidades() >= 50:
+        monto_descuento = subtotal * (descuento / 2)
+
+    base = subtotal - monto_descuento
+
+    if base >= 200:
+        monto_igv = base * igv
+    else:
+        monto_igv = base * (igv - 0.03)
+
+    return {
+        "subtotal": round(subtotal, 2),
+        "descuento": round(monto_descuento, 2),
+        "igv": round(monto_igv, 2),
+        "total": round(base + monto_igv, 2),
+    }
