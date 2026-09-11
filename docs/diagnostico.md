@@ -22,3 +22,12 @@ Se espera mejorar el tiempo de entrega del cambio, ya que con las intervenciones
 
 Numero concreto:
 Se va a utilizar el Usage para poder realizar la comparación de los tiempos.
+
+Se declaró la versión 1.3.5. Desde el tag `v1.2.0` (commit `b7e44ce`), el historial contiene los siguientes cambios sobre el código del paquete:
+
+- `b481aa6 fix(tarifas): redondear el costo por peso a dos decimales`
+- `6ba3804 fix(validaciones): colapsar espacios repetidos en el nombre del cliente`
+- `562e631 feat(tarifas): agregar desglose de la tarifa calculada`
+- Incluyendo los 2 fix del laboratorio pasado.
+
+Actualemente no se puede resolver versiones de forma automaizada. 
